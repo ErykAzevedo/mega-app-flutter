@@ -3,15 +3,8 @@ import 'package:flutter/material.dart';
 import '../models/unit.dart';
 import '../services/units_service.dart';
 import '../widgets/filter_dropdown.dart';
+import '../widgets/sort_dropdown.dart';
 import '../widgets/unit_card.dart';
-
-enum SortOption {
-  unitTitle('Título da Unidade'),
-  unitAirbnbCode('Código Airbnb');
-
-  const SortOption(this.label);
-  final String label;
-}
 
 class UnitsListScreen extends StatefulWidget {
   const UnitsListScreen({super.key});
@@ -102,29 +95,6 @@ class _UnitsListScreenState extends State<UnitsListScreen> {
     }
   }
 
-  Widget _buildSortDropdown() {
-    return PopupMenuButton<SortOption>(
-      icon: const Icon(Icons.sort),
-      tooltip: 'Ordenar por',
-      onSelected: _onSortOptionChanged,
-      itemBuilder: (context) => SortOption.values.map((option) {
-        return PopupMenuItem<SortOption>(
-          value: option,
-          child: Row(
-            children: [
-              Icon(
-                _selectedSortOption == option ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-                color: _selectedSortOption == option ? Theme.of(context).primaryColor : null,
-              ),
-              const SizedBox(width: 8),
-              Text(option.label),
-            ],
-          ),
-        );
-      }).toList(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,7 +103,7 @@ class _UnitsListScreenState extends State<UnitsListScreen> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           if (!_isLoading && _errorMessage == null) ...[
-            _buildSortDropdown(),
+            SortDropdown(selectedSortOption: _selectedSortOption, onSortOptionChanged: _onSortOptionChanged),
             FilterDropdown(
               allTags: _allTags,
               selectedTags: _selectedTags,
