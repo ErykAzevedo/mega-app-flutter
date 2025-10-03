@@ -1,18 +1,18 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
-
 import '../models/unit.dart';
+import 'firebase_service.dart';
 
 class UnitsService {
+  // Carregar unidades diretamente do Firestore
   static Future<List<Unit>> loadUnits() async {
     try {
-      final String jsonString = await rootBundle.loadString('lib/data/units.json');
-      final dynamic decodedJson = json.decode(jsonString);
-      final List<dynamic> jsonList = decodedJson as List<dynamic>;
-      return jsonList.map((json) => Unit.fromJson(json as Map<String, dynamic>)).toList();
+      print('🔄 Carregando unidades do Firestore...');
+      final List<Unit> units = await FirebaseService.loadUnitsFromFirestore();
+      print('✅ ${units.length} unidades carregadas do Firestore com sucesso');
+      print('📋 Unidades: ${units.map((u) => u.unitTitle).join(", ")}');
+      return units;
     } catch (e) {
-      throw Exception('Erro ao carregar unidades: $e');
+      print('❌ Erro ao carregar unidades do Firestore: $e');
+      throw Exception('Erro ao carregar unidades do Firestore: $e');
     }
   }
 
