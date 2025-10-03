@@ -67,7 +67,7 @@ class FilterDropdown extends StatelessWidget {
                 children: [
                   Icon(
                     isSelected ? Icons.check_box : Icons.check_box_outline_blank,
-                    color: isSelected ? Theme.of(context).primaryColor : null,
+                    //color: isSelected ? Theme.of(context).primaryColor : null,
                   ),
                   const SizedBox(width: 8),
                   Expanded(child: Text(tag)),

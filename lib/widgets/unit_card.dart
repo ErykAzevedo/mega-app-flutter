@@ -8,7 +8,6 @@ class UnitCard extends StatelessWidget {
   final Unit unit;
 
   Future<void> _openCalendar(String airbnbCode) async {
-    print('airbnbCode: $airbnbCode');
     final url = Uri.parse('https://www.airbnb.com.br/multicalendar/$airbnbCode');
 
     if (await canLaunchUrl(url)) {
@@ -35,9 +34,21 @@ class UnitCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '${unit.unitTitle} - ${unit.unitCode}',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    unit.unitTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Text(
+                  unit.unitCode,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
             const SizedBox(height: 12),
             // Wrap(
@@ -52,34 +63,37 @@ class UnitCard extends StatelessWidget {
             //   }).toList(),
             // ),
             // const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () => _openCalendar(unit.unitAirbnbCode),
-                    icon: const Icon(Icons.calendar_month),
-                    label: const Text('Calendário'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+            SizedBox(
+              height: 30,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () => _openCalendar(unit.unitAirbnbCode),
+                      icon: const Icon(Icons.calendar_month),
+                      label: const Text('Calendário'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        foregroundColor: Colors.white,
+                        //padding: const EdgeInsets.symmetric(vertical: 4),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () => _openMessages(unit.unitAirbnbCode),
-                    icon: const Icon(Icons.message),
-                    label: const Text('Mensagens'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () => _openMessages(unit.unitAirbnbCode),
+                      icon: const Icon(Icons.message),
+                      label: const Text('Mensagens'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        foregroundColor: Colors.white,
+                        //padding: const EdgeInsets.symmetric(vertical: 4),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

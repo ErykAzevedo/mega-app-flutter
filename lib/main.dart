@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
 import 'screens/units_list_screen.dart';
 
@@ -17,15 +18,9 @@ class MegaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mega App - Unidades',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange, brightness: Brightness.light),
-        useMaterial3: true,
-        cardTheme: CardThemeData(elevation: 2, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-        chipTheme: ChipThemeData(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        ),
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      //themeMode: ThemeMode.system,
       home: const UnitsListScreen(),
       debugShowCheckedModeBanner: false,
     );

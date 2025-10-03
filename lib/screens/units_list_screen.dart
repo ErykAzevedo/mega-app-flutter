@@ -5,6 +5,14 @@ import '../services/units_service.dart';
 import '../widgets/filter_dropdown.dart';
 import '../widgets/unit_card.dart';
 
+enum SortOption {
+  unitTitle('Título da Unidade'),
+  unitAirbnbCode('Código Airbnb');
+
+  const SortOption(this.label);
+  final String label;
+}
+
 class UnitsListScreen extends StatefulWidget {
   const UnitsListScreen({super.key});
 
@@ -19,6 +27,7 @@ class _UnitsListScreenState extends State<UnitsListScreen> {
   final Set<String> _selectedTags = {};
   bool _isLoading = true;
   String? _errorMessage;
+  SortOption _selectedSortOption = SortOption.unitTitle;
 
   @override
   void initState() {
@@ -70,6 +79,50 @@ class _UnitsListScreenState extends State<UnitsListScreen> {
 
   void _applyFilters() {
     _filteredUnits = UnitsService.filterUnitsByTags(_allUnits, _selectedTags);
+    _applySorting();
+  }
+
+  void _applySorting() {
+    _filteredUnits.sort((a, b) {
+      switch (_selectedSortOption) {
+        case SortOption.unitTitle:
+          return a.unitTitle.compareTo(b.unitTitle);
+        case SortOption.unitAirbnbCode:
+          return a.unitAirbnbCode.compareTo(b.unitAirbnbCode);
+      }
+    });
+  }
+
+  void _onSortOptionChanged(SortOption? newOption) {
+    if (newOption != null && newOption != _selectedSortOption) {
+      setState(() {
+        _selectedSortOption = newOption;
+        _applySorting();
+      });
+    }
+  }
+
+  Widget _buildSortDropdown() {
+    return PopupMenuButton<SortOption>(
+      icon: const Icon(Icons.sort),
+      tooltip: 'Ordenar por',
+      onSelected: _onSortOptionChanged,
+      itemBuilder: (context) => SortOption.values.map((option) {
+        return PopupMenuItem<SortOption>(
+          value: option,
+          child: Row(
+            children: [
+              Icon(
+                _selectedSortOption == option ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                color: _selectedSortOption == option ? Theme.of(context).primaryColor : null,
+              ),
+              const SizedBox(width: 8),
+              Text(option.label),
+            ],
+          ),
+        );
+      }).toList(),
+    );
   }
 
   @override
@@ -79,13 +132,15 @@ class _UnitsListScreenState extends State<UnitsListScreen> {
         title: Text('Unidades (${_allUnits.length})'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
-          if (!_isLoading && _errorMessage == null)
+          if (!_isLoading && _errorMessage == null) ...[
+            _buildSortDropdown(),
             FilterDropdown(
               allTags: _allTags,
               selectedTags: _selectedTags,
               onTagToggled: _onTagToggled,
               onClearFilters: _onClearFilters,
             ),
+          ],
           IconButton(icon: const Icon(Icons.refresh), onPressed: _loadUnits, tooltip: 'Recarregar'),
         ],
       ),
