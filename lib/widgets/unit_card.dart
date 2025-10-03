@@ -7,14 +7,16 @@ class UnitCard extends StatelessWidget {
   const UnitCard({super.key, required this.unit});
   final Unit unit;
 
-  Future<void> _openCalendar(int airbnbCode) async {
+  Future<void> _openCalendar(String airbnbCode) async {
+    print('airbnbCode: $airbnbCode');
     final url = Uri.parse('https://www.airbnb.com.br/multicalendar/$airbnbCode');
+
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 
-  Future<void> _openMessages(int airbnbCode) async {
+  Future<void> _openMessages(String airbnbCode) async {
     final url = Uri.parse(
       'https://www.airbnb.com.br/hosting/messages/?inbox_type=hosting&stay_listing_ids=$airbnbCode',
     );
@@ -33,30 +35,23 @@ class UnitCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(unit.unitTitle, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
             Text(
-              'Código: ${unit.unitCode}',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'Airbnb: ${unit.unitAirbnbCode}',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+              '${unit.unitTitle} - ${unit.unitCode}',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: unit.tags.map((tag) {
-                return Chip(
-                  label: Text(tag, style: const TextStyle(fontSize: 12)),
-                  backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
-                  side: BorderSide(color: Theme.of(context).primaryColor.withOpacity(0.3)),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 16),
+            // Wrap(
+            //   spacing: 8,
+            //   runSpacing: 4,
+            //   children: unit.tags.map((tag) {
+            //     return Chip(
+            //       label: Text(tag, style: const TextStyle(fontSize: 12)),
+            //       backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+            //       side: BorderSide(color: Theme.of(context).primaryColor.withValues(alpha: 0.3)),
+            //     );
+            //   }).toList(),
+            // ),
+            // const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(

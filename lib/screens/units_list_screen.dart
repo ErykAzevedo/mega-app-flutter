@@ -76,7 +76,7 @@ class _UnitsListScreenState extends State<UnitsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Unidades Disponíveis (${_allUnits.length})'),
+        title: Text('Unidades (${_allUnits.length})'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           if (!_isLoading && _errorMessage == null)

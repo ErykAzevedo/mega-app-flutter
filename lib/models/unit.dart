@@ -6,7 +6,7 @@ class Unit {
       id: json['id'] as String?,
       unitCode: json['unitCode'] as String,
       unitTitle: json['unitTitle'] as String,
-      unitAirbnbCode: json['unitAirbnbCode'] as int,
+      unitAirbnbCode: json['unitAirbnbCode'] as String,
       tags: List<String>.from(json['tags'] as List),
     );
   }
@@ -14,7 +14,7 @@ class Unit {
   final String? id; // ID do documento no Firestore (opcional para compatibilidade com JSON)
   final String unitCode;
   final String unitTitle;
-  final int unitAirbnbCode;
+  final String unitAirbnbCode;
   final List<String> tags;
 
   Map<String, dynamic> toJson() {
