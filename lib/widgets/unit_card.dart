@@ -64,7 +64,7 @@ class UnitCard extends StatelessWidget {
             // ),
             // const SizedBox(height: 16),
             SizedBox(
-              height: 30,
+              height: 32,
               child: Row(
                 children: [
                   Expanded(
@@ -75,7 +75,7 @@ class UnitCard extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).primaryColor,
                         foregroundColor: Colors.white,
-                        //padding: const EdgeInsets.symmetric(vertical: 4),
+                        padding: EdgeInsets.zero,
                       ),
                     ),
                   ),
@@ -88,7 +88,7 @@ class UnitCard extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).primaryColor,
                         foregroundColor: Colors.white,
-                        //padding: const EdgeInsets.symmetric(vertical: 4),
+                        padding: EdgeInsets.zero,
                       ),
                     ),
                   ),
