@@ -1,0 +1,20 @@
+[
+  {
+    "unitCode": "fiji",
+    "unitTitle": "Apartamento maravilhoso em ubatuba",
+    "unitAirbnbCode": 745044364291229431,
+    "tags": [
+      "ubatuba",
+      "praia-grande"
+    ]
+  },
+  {
+    "unitCode": "setin",
+    "unitTitle": "Apartamento maravilhoso no centro de SP",
+    "unitAirbnbCode": 1196359608063896510,
+    "tags": [
+      "sao-paulo",
+      "centro"
+    ]
+  }
+]
