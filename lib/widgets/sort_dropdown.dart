@@ -25,9 +25,7 @@ class SortDropdown extends StatelessWidget {
           value: option,
           child: Row(
             children: [
-              Icon(
-                selectedSortOption == option ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-              ),
+              Icon(selectedSortOption == option ? Icons.radio_button_checked : Icons.radio_button_unchecked),
               const SizedBox(width: 8),
               Text(option.label),
             ],
